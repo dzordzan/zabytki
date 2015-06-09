@@ -13,6 +13,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.UserRecoverableException;
+import com.google.android.gms.location.places.ui.PlacePicker;
+
 
 public class PlaceActivity extends Activity {
     private TextView name;
@@ -35,6 +39,11 @@ public class PlaceActivity extends Activity {
         addOrDel = (Button) findViewById(R.id.button2);
         rating = (RatingBar) findViewById(R.id.ratingBar);
 
+        //if(){ // obiekt w ulubionych
+       //     addOrDel.setText("Usuń z ulubionych");
+       // }else{
+            addOrDel.setText("Dodaj do ulubionych");
+      //  }
 
         if(PlaceData.NAME == null){
             onBackPressed();
@@ -48,8 +57,22 @@ public class PlaceActivity extends Activity {
         else{
             name.setText(PlaceData.NAME);
             addres.setText(PlaceData.ADDRESS);
-            number.setText(PlaceData.PHONE_NUMBER);
-            url.setText(PlaceData.URI);
+
+            if(PlaceData.PHONE_NUMBER != null){
+                number.setText(PlaceData.PHONE_NUMBER);
+               // number.setClickable(true);
+            }else
+                number.setText("Brak Numeru Tel");
+               // number.setClickable(false);
+            if(PlaceData.URI != null){
+                url.setText(PlaceData.URI);
+                url.setClickable(true);
+            }
+            else {
+                url.setText("Brak Url");
+                url.setClickable(false);
+            }
+
             rating.setRating(PlaceData.RATING);
 
         }
@@ -83,7 +106,7 @@ public class PlaceActivity extends Activity {
         String latitude  = Double.toString(PlaceData.LATLNG.latitude);
         String longitude = Double.toString(PlaceData.LATLNG.longitude);
         String navigateTo = "google.navigation:q=" + latitude +"," + longitude;
-
+        //Uri gmmIntentUri = Uri.parse("google.navigation:q=Taronga+Zoo,+Sydney+Australia");
         Uri gmmIntentUri = Uri.parse(navigateTo);
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
@@ -108,6 +131,7 @@ public class PlaceActivity extends Activity {
     }
 
     public void phoneNumber(View view) {
+
         String phoneNumber = "tel:" + PlaceData.PHONE_NUMBER;
         Uri number = Uri.parse(phoneNumber);
         Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
@@ -119,5 +143,13 @@ public class PlaceActivity extends Activity {
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
+    }
+
+    public void map(View view) throws UserRecoverableException, GooglePlayServicesNotAvailableException {
+        int PLACE_PICKER_REQUEST = 1;
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+        Context context = getApplicationContext();
+        startActivityForResult(builder.build(context), PLACE_PICKER_REQUEST);
     }
 }
