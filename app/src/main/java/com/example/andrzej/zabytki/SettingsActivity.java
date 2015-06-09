@@ -85,7 +85,7 @@ public class SettingsActivity extends Activity {
     public void saveSettings(View view) {
 
         Context context = getApplicationContext();
-        CharSequence text = "Ustawienia zosta≥y zapisane";
+        CharSequence text = "Ustawienia zosta≈Çy zapisane";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
