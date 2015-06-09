@@ -21,7 +21,7 @@ public class SettingsActivity extends Activity {
 
     private RadioGroup radioGroup;
 
-    private static final String SELECTED_INDEX="SelectedIndex";
+    private static String SELECTED_INDEX="SelectedIndex";
 
 
     private RadioGroup.OnCheckedChangeListener checkedChangedListener=new RadioGroup.OnCheckedChangeListener() {
@@ -47,12 +47,14 @@ public class SettingsActivity extends Activity {
 //            rBRating.setChecked(true);
 //        }
 
-        radioGroup = (RadioGroup) findViewById(R.id.radio);
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(checkedChangedListener);
         RadioButton rbtn=((RadioButton)radioGroup.findViewById(getSelectedValue()));
         if(rbtn!=null) {
             rbtn.setChecked(true);
         }
+
+        String value = Integer.toString(getSelectedValue());
     }
 
     private int getSelectedValue(){
