@@ -1,5 +1,6 @@
 package com.example.andrzej.zabytki;
 
+<<<<<<< HEAD
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -57,6 +58,27 @@ public class FavouritePlacesActivity extends ListActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+=======
+import android.app.Activity;
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
+
+public class FavouritePlacesActivity extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_favourite_places);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_favourite_places, menu);
+>>>>>>> zabytki/master
         return true;
     }
 
@@ -74,6 +96,7 @@ public class FavouritePlacesActivity extends ListActivity {
 
         return super.onOptionsItemSelected(item);
     }
+<<<<<<< HEAD
 
     // metoda uzupełnia naszą listę danymi pobranymi z bazy
     private void fillData() {
@@ -158,4 +181,6 @@ public class FavouritePlacesActivity extends ListActivity {
         fillData();
 
     }
+=======
+>>>>>>> zabytki/master
 }

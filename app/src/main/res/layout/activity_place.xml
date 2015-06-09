@@ -26,7 +26,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Numer"
-        android:id="@+id/textView3" />
+        android:id="@+id/textView3"
+        android:onClick="phoneNumber" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,7 +45,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Nawiguj"
-        android:id="@+id/button3" />
+        android:id="@+id/button3"
+        android:onClick="navigation" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -60,8 +62,9 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dodaj do ulubionych"
-            android:id="@+id/button2" />
+            android:text="Dodaj obiekt"
+            android:id="@+id/button2"
+            android:onClick="addToFavourite" />
     </LinearLayout>
 
 </LinearLayout>
