@@ -44,15 +44,15 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void Map(View view) {
+    public void Map(View view)throws UserRecoverableException, GooglePlayServicesNotAvailableException {
+        int PLACE_PICKER_REQUEST = 1;
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
 
-        Intent mapa = new Intent(this, MapsActivity.class);
-
-
-        startActivity(mapa);
+        Context context = getApplicationContext();
+        startActivityForResult(builder.build(context), PLACE_PICKER_REQUEST);
     }
 
-    public void Help(View view) throws UserRecoverableException, GooglePlayServicesNotAvailableException {
+    public void Help(View view)  {
           Intent help = new Intent(this, HelpActivity.class);
           startActivity(help);
 

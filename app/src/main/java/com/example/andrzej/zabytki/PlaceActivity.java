@@ -245,6 +245,7 @@ class AsyncFetch extends AsyncTask<String, Void, JSONObject> {
         this.onResponse = onResponse;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected JSONObject doInBackground(String... params) {
         try {
