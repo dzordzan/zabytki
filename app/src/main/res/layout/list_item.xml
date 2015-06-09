@@ -20,7 +20,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textSize="14sp"
             android:textColor="#33b5e5"
-            android:id="@+id/noteDate"
+            android:id="@+id/placeDate"
             android:paddingRight="10dp" />
 
         <TextView

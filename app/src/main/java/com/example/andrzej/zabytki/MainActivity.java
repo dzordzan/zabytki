@@ -84,4 +84,11 @@ public class MainActivity extends Activity {
             }
         }
     }
+
+    public void Lists(View view) {
+        Intent activity = new Intent(this, FavouritePlacesActivity.class);
+
+        startActivity(activity);
+
+    }
 }

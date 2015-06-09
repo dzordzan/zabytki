@@ -115,7 +115,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // zamiast new String[] { KEY_ID, KEY_TITLE, KEY_BODY }
         // możemy użyć null (wszystkie kolumny)
-        Cursor cursor = db.query(TABLE_PLACES, new String[] { null },
+        Cursor cursor = db.query(TABLE_PLACES, null,
                 KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
 
         if (cursor != null)
@@ -190,7 +190,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public Cursor fetchAllNotes() {
-        return db.query(TABLE_PLACES, new String[] { null }, null, null, null, null,
+        return db.query(TABLE_PLACES, null, null, null, null, null,
                 SORT+" "+ORDER);
     }
 
@@ -218,7 +218,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }*/
 
     // usunięcie pojedynczego miejsca
-    public void deleteNote(PlaceData place) {
+    public void deletePlace(PlaceData place) {
 
         db.delete(TABLE_PLACES, KEY_ID + " = ?",
                 new String[] { String.valueOf(place.getId()) });
