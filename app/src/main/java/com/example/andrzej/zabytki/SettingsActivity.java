@@ -1,19 +1,71 @@
 package com.example.andrzej.zabytki;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 
 public class SettingsActivity extends Activity {
+//
+//    private RadioGroup rG;
+//    private RadioButton rBData, rBRating;
 
-    @Override
+    private RadioGroup radioGroup;
+
+    private static final String SELECTED_INDEX="SelectedIndex";
+
+
+    private RadioGroup.OnCheckedChangeListener checkedChangedListener=new RadioGroup.OnCheckedChangeListener() {
+
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            saveSelectedIndex(checkedId);
+        }
+    };
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+//        rBData = (RadioButton)findViewById(R.id.radioButton);
+//        rBRating = (RadioButton)findViewById(R.id.radioButton2);
+//        SharedPreferences prefs = this.getSharedPreferences(
+//                "com.example.app", Context.MODE_PRIVATE);
+//
+//        boolean rData = prefs.getBoolean("rBData", true);
+//        boolean rRating = prefs.getBoolean("rBRating",true);
+//        if(rData){
+//            rBData.setChecked(true);
+//        }else {
+//            rBRating.setChecked(true);
+//        }
+
+        radioGroup = (RadioGroup) findViewById(R.id.radio);
+        radioGroup.setOnCheckedChangeListener(checkedChangedListener);
+        RadioButton rbtn=((RadioButton)radioGroup.findViewById(getSelectedValue()));
+        if(rbtn!=null) {
+            rbtn.setChecked(true);
+        }
     }
+
+    private int getSelectedValue(){
+        SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(this);
+        return pref.getInt(SELECTED_INDEX, -1);
+    }
+
+    private void saveSelectedIndex(int value){
+        SharedPreferences.Editor editor= PreferenceManager.getDefaultSharedPreferences(this).edit();
+        editor.putInt(SELECTED_INDEX, value);
+        editor.commit();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -35,5 +87,24 @@ public class SettingsActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void saveSettings(View view) {
+//        SharedPreferences prefs = this.getSharedPreferences(
+//                "com.example.app", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = prefs.edit();
+//        if(rBData.isChecked()){
+//            editor.putBoolean("rBData",rBData.isChecked());
+//        }else {
+//            editor.putBoolean("rBRating", rBRating.isChecked());
+//        }
+//        editor.apply();
+//
+//        Context context = getApplicationContext();
+//        CharSequence text = "Ustawienia zosta³y zapisane";
+//        int duration = Toast.LENGTH_SHORT;
+//
+//        Toast toast = Toast.makeText(context, text, duration);
+//        toast.show();
     }
 }
