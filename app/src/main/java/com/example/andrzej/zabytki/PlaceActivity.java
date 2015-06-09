@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.UserRecoverableException;
+import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import org.apache.http.HttpEntity;
@@ -68,7 +69,7 @@ public class PlaceActivity extends Activity implements onResponse {
         rating = (RatingBar) findViewById(R.id.ratingBar);
 
         DatabaseHandler db = new DatabaseHandler(this);
-        Log.i("aaaa", PlaceData.ID);
+
         if (db.getPlace(PlaceData.ID)) {
             addOrDel.setText("Usuń z ulubionych");
         } else {
@@ -202,6 +203,31 @@ public class PlaceActivity extends Activity implements onResponse {
 
         Context context = getApplicationContext();
         startActivityForResult(builder.build(context), PLACE_PICKER_REQUEST);
+
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+                /*String toastMsg = String.format("Place: %s", place.getName());
+                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();*/
+                PlaceData.ID = place.getId();
+                PlaceData.ADDRESS = String.valueOf(place.getAddress());
+                PlaceData.LATLNG = place.getLatLng();
+                PlaceData.LOCALE = place.getLocale();
+                PlaceData.NAME = place.getName().toString();
+                PlaceData.PHONE_NUMBER = (place.getPhoneNumber()!=null)?place.getPhoneNumber().toString():null;
+                PlaceData.PRICING = place.getPriceLevel();
+                PlaceData.TYPES = place.getPlaceTypes();
+                PlaceData.URI = (place.getWebsiteUri()!=null)?place.getWebsiteUri().toString():null;
+                PlaceData.RATING = place.getRating();
+
+                Intent placeActivity = new Intent(this, PlaceActivity.class);
+
+                startActivity(placeActivity);
+            }
+        }
     }
 
     @Override
@@ -209,7 +235,7 @@ public class PlaceActivity extends Activity implements onResponse {
 
 
         try {
-            Log.d("TEST", "aa"+ object.getString("responseData"));
+            //Log.d("TEST", "aa"+ object.getString("responseData"));
             Pattern p = Pattern.compile("url\":\"([^\"]+)\"");
             Matcher m = p.matcher(object.getString("responseData"));
             while (m.find()) {

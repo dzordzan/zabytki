@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.47"
             android:text="@string/szukaj_miejsc"
-            android:onClick="addNote" />
+            android:onClick="findPlace" />
     </LinearLayout>
 
     <TextView

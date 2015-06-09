@@ -26,6 +26,11 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.UserRecoverableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+
 
 @SuppressWarnings("deprecation")
 public class FavouritePlacesActivity extends ListActivity {
@@ -67,7 +72,7 @@ public class FavouritePlacesActivity extends ListActivity {
         super.onListItemClick(l, v, position, id);
         //Log.i("BAZA", "Pozycja: " + position + " ID: " + id);
         // informacja o danych związanych z kliknięciem (id jest związane z naszą bazą)
-        Log.i("BAZA", "Pozycja: " + position + " ID: " + id);
+
         db.getPlace(id);
 
         Intent cel = new Intent(this, PlaceActivity.class);
@@ -101,17 +106,7 @@ public class FavouritePlacesActivity extends ListActivity {
     private void fillData() {
 
         Cursor c = db.fetchAllNotes();
-        /*startManagingCursor(c);
 
-        String[] from = new String[] { DatabaseHandler.KEY_NAME,
-                                       DatabaseHandler.KEY_ADDRESS,
-                                    DatabaseHandler.KEY_RATING,
-                                    DatabaseHandler.KEY_DATE};
-        int[] to = new int[] { R.id.placeName, R.id.placeAddress, R.id.ratingBar2, R.id.placeDate };
-
-        // Uzupełniamy listę wartościami
-        this.places = new SimpleCursorAdapter(this, R.layout.list_item, c, from, to);
-        */
         ListView lvItems = (ListView) findViewById(R.id.list_item);
         this.places = new PlaceCursorAdapter(this, c);
 
@@ -129,12 +124,11 @@ public class FavouritePlacesActivity extends ListActivity {
     public void deletePlace(View view) {
         final int position = getListView().getPositionForView((LinearLayout) view.getParent());
         final long idNotatki = places.getItemId(position);
-        Log.i("test", "POZYCJA:"+position+" ID_NOTKI:"+idNotatki);
 
 
         new AlertDialog.Builder(this)
                 .setTitle("Kasujesz z ulubionych")
-                .setMessage("Czy na pewno chcesz usunąć bezpowrotnie notatkę?")
+                .setMessage("Czy na pewno chcesz usunąć bezpowrotnie placówkę?")
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
@@ -143,7 +137,7 @@ public class FavouritePlacesActivity extends ListActivity {
 
                         db.deletePlace(idNotatki);
                         fillData();
-                        Toast.makeText(FavouritePlacesActivity.this, "Notatka usunięta", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FavouritePlacesActivity.this, "Placówka usunięta", Toast.LENGTH_SHORT).show();
 
 
                     }})
@@ -184,6 +178,38 @@ public class FavouritePlacesActivity extends ListActivity {
         fillData();
 
     }
+
+    public void findPlace(View view) throws UserRecoverableException, GooglePlayServicesNotAvailableException {
+        int PLACE_PICKER_REQUEST = 1;
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+        Context context = getApplicationContext();
+        startActivityForResult(builder.build(context), PLACE_PICKER_REQUEST);
+
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+
+                PlaceData.ID = place.getId();
+                PlaceData.ADDRESS = String.valueOf(place.getAddress());
+                PlaceData.LATLNG = place.getLatLng();
+                PlaceData.LOCALE = place.getLocale();
+                PlaceData.NAME = place.getName().toString();
+                PlaceData.PHONE_NUMBER = (place.getPhoneNumber()!=null)?place.getPhoneNumber().toString():null;
+                PlaceData.PRICING = place.getPriceLevel();
+                PlaceData.TYPES = place.getPlaceTypes();
+                PlaceData.URI = (place.getWebsiteUri()!=null)?place.getWebsiteUri().toString():null;
+                PlaceData.RATING = place.getRating();
+
+                Intent placeActivity = new Intent(this, PlaceActivity.class);
+
+                startActivity(placeActivity);
+            }
+        }
+    }
 }
 
 class PlaceCursorAdapter extends CursorAdapter {
@@ -220,6 +246,6 @@ class PlaceCursorAdapter extends CursorAdapter {
         address.setText(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHandler.KEY_ADDRESS)));
         date.setText(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHandler.KEY_DATE)));
         rating.setRating(cursor.getFloat(cursor.getColumnIndexOrThrow(DatabaseHandler.KEY_RATING)));
-        Log.i("tag", cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHandler.KEY_PRICING)));
+
     }
 }
