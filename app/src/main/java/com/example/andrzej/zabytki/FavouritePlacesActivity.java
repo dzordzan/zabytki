@@ -5,8 +5,11 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.media.Rating;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,6 +41,17 @@ public class FavouritePlacesActivity extends ListActivity {
         // nowy obiekt - obsługa bazy danych
         db = new DatabaseHandler(this);
 
+        SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(this);
+            int idDefault = pref.getInt("SelectedIndex", -1);
+
+       //ImageButton b = (ImageButton)view;
+        if (idDefault == 2131361912) {
+            DatabaseHandler.SORT = DatabaseHandler.KEY_RATING;
+            //b.setImageResource(android.R.drawable.arrow_down_float);
+        } else {
+            DatabaseHandler.SORT = DatabaseHandler.KEY_DATE;
+           // b.setImageResource(android.R.drawable.arrow_up_float);
+        }
         // wywołanie metody uzupełniającej listę
         fillData();
     }
@@ -80,6 +94,8 @@ public class FavouritePlacesActivity extends ListActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
     // metoda uzupełnia naszą listę danymi pobranymi z bazy
     private void fillData() {
@@ -158,7 +174,7 @@ public class FavouritePlacesActivity extends ListActivity {
 
         ImageButton b = (ImageButton)view;
 
-        if (DatabaseHandler.ORDER == "ASC") {
+        if (DatabaseHandler.ORDER.equals("ASC")) {
             DatabaseHandler.ORDER = "DESC";
             b.setImageResource(android.R.drawable.arrow_down_float);
         } else {

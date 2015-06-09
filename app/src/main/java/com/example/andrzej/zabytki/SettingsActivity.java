@@ -2,6 +2,7 @@ package com.example.andrzej.zabytki;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
@@ -11,17 +12,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class SettingsActivity extends Activity {
-//
-//    private RadioGroup rG;
-//    private RadioButton rBData, rBRating;
+
 
     private RadioGroup radioGroup;
 
-    private static String SELECTED_INDEX="SelectedIndex";
+    public static String SELECTED_INDEX="SelectedIndex";
 
 
     private RadioGroup.OnCheckedChangeListener checkedChangedListener=new RadioGroup.OnCheckedChangeListener() {
@@ -34,18 +34,7 @@ public class SettingsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-//        rBData = (RadioButton)findViewById(R.id.radioButton);
-//        rBRating = (RadioButton)findViewById(R.id.radioButton2);
-//        SharedPreferences prefs = this.getSharedPreferences(
-//                "com.example.app", Context.MODE_PRIVATE);
-//
-//        boolean rData = prefs.getBoolean("rBData", true);
-//        boolean rRating = prefs.getBoolean("rBRating",true);
-//        if(rData){
-//            rBData.setChecked(true);
-//        }else {
-//            rBRating.setChecked(true);
-//        }
+
 
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(checkedChangedListener);
@@ -55,6 +44,8 @@ public class SettingsActivity extends Activity {
         }
 
         String value = Integer.toString(getSelectedValue());
+        TextView test = (TextView)findViewById(R.id.testText);
+        test.setText(value);
     }
 
     private int getSelectedValue(){
@@ -92,21 +83,15 @@ public class SettingsActivity extends Activity {
     }
 
     public void saveSettings(View view) {
-//        SharedPreferences prefs = this.getSharedPreferences(
-//                "com.example.app", Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = prefs.edit();
-//        if(rBData.isChecked()){
-//            editor.putBoolean("rBData",rBData.isChecked());
-//        }else {
-//            editor.putBoolean("rBRating", rBRating.isChecked());
-//        }
-//        editor.apply();
-//
-//        Context context = getApplicationContext();
-//        CharSequence text = "Ustawienia zosta³y zapisane";
-//        int duration = Toast.LENGTH_SHORT;
-//
-//        Toast toast = Toast.makeText(context, text, duration);
-//        toast.show();
+
+        Context context = getApplicationContext();
+        CharSequence text = "Ustawienia zosta³y zapisane";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+//        Intent menu = new Integer(this, MainActivity.class);
+//        startActivity(menu);
     }
 }
