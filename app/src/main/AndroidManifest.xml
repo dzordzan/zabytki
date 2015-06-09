@@ -50,7 +50,10 @@
             android:name=".FavouritePlacesActivity"
             android:label="Ulubione miejsca">
         </activity>
-
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>

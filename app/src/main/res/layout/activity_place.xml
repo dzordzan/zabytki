@@ -27,14 +27,17 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Numer"
         android:id="@+id/textView3"
-        android:onClick="phoneNumber" />
+        android:onClick="phoneNumber"
+        android:clickable="true"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="URL"
-        android:id="@+id/textView4" />
+        android:id="@+id/textView4"
+        android:onClick="openBrowse"
+        android:clickable="true"/>
 
     <RatingBar
         android:layout_width="wrap_content"

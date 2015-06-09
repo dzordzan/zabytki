@@ -7,4 +7,5 @@
     <string name="title_activity_zabytek">ZabytekActivity</string>
     <string name="no_places">Brak ulubionych miejsc</string>
     <string name="szukaj_miejsc">Znajdz ulubione miejsce</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 </resources>

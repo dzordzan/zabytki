@@ -92,7 +92,6 @@ public class PlaceActivity extends Activity {
 
     public void addToFavourite(View view) {
        // if(){
-
             //hendler insert
            // Intent favourite = new Intent(this, class.FavouritePlacesActivity);
            // startActivity(favourite);
@@ -109,8 +108,16 @@ public class PlaceActivity extends Activity {
     }
 
     public void phoneNumber(View view) {
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        //callIntent.setData(Uri.parse()));
+        String phoneNumber = "tel:" + PlaceData.PHONE_NUMBER;
+        Uri number = Uri.parse(phoneNumber);
+        Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
         startActivity(callIntent);
+    }
+
+    public void openBrowse(View view) {
+        String url = PlaceData.URI;
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 }
