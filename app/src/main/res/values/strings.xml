@@ -4,9 +4,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_maps">Map</string>
-    <string name="title_activity_zabytek">ZabytekActivity</string>
+    <string name="title_activity_zabytek">Miejsce</string>
     <string name="no_places">Brak ulubionych miejsc</string>
     <string name="szukaj_miejsc">Znajdz ulubione miejsce</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_help">HelpActivity</string>
+    <string name="title_activity_settings">Ustawienia</string>
+    <string name="title_activity_help">Pomoc</string>
 </resources>
