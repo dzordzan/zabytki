@@ -38,6 +38,9 @@ public class MainActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent settings = new Intent(this, SettingsActivity.class);
+
+            startActivity(settings);
             return true;
         }
 

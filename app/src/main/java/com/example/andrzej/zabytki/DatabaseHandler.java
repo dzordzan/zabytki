@@ -226,7 +226,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return cursor.getCount();
     }
 
-    // aktualizacja notatki
+    // aktualizacja rankingu
     public int updateRating() {
 
         ContentValues values = new ContentValues();
