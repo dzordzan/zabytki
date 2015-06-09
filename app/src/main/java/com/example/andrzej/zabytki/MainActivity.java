@@ -92,4 +92,10 @@ public class MainActivity extends Activity {
         startActivity(activity);
 
     }
+
+    public void Settings(View view) {
+        Intent settings = new Intent(this, SettingsActivity.class);
+
+        startActivity(settings);
+    }
 }
