@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,11 +40,13 @@ public class PlaceActivity extends Activity {
         addOrDel = (Button) findViewById(R.id.button2);
         rating = (RatingBar) findViewById(R.id.ratingBar);
 
-        //if(){ // obiekt w ulubionych
-       //     addOrDel.setText("Usuń z ulubionych");
-       // }else{
+        DatabaseHandler db = new DatabaseHandler(this);
+        Log.i("aaaa", PlaceData.ID);
+        if(db.getPlace(PlaceData.ID)){
+            addOrDel.setText("Usuń z ulubionych");
+        }else{
             addOrDel.setText("Dodaj do ulubionych");
-      //  }
+        }
 
         if(PlaceData.NAME == null){
             onBackPressed();
@@ -114,20 +117,33 @@ public class PlaceActivity extends Activity {
     }
 
     public void addToFavourite(View view) {
-       // if(){
-            //hendler insert
-           // Intent favourite = new Intent(this, class.FavouritePlacesActivity);
-           // startActivity(favourite);
-       // }
-       // else{
+        DatabaseHandler db = new DatabaseHandler(this);
+        addOrDel = (Button) findViewById(R.id.button2);
+
+        if(db.getPlace(PlaceData.ID) == false){
+            Context context = getApplicationContext();
+            CharSequence text = "Obiekt został dodany do ulubionych";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+
+            // dodawanie do bd
+            addOrDel.setText("Usuń z ulubionych");
+            db.addPlace();
+        }else{
             //delete
+            db.deletePlace(PlaceData.ID);
+
             Context context = getApplicationContext();
             CharSequence text = "Obiekt został usunięty z ulubionych";
             int duration = Toast.LENGTH_SHORT;
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
-       // }
+
+            addOrDel.setText("Dodaj do ulubionych");
+        }
     }
 
     public void phoneNumber(View view) {

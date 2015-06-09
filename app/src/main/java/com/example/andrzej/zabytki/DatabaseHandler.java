@@ -11,6 +11,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -21,10 +22,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     // nazwa bazy
-    private static final String DATABASE_NAME = "bazadev.db";
+    private static final String DATABASE_NAME = "bazadev_1.db";
 
     // tabela z ulubionymi miejscami
-    private static final String TABLE_PLACES = "places";
+    private static final String TABLE_PLACES = "places2";
 
     // nazwy kolumn naszej tabeli
     public static final String KEY_ID = "_id";
@@ -68,7 +69,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 KEY_URI + " TEXT," +
                 KEY_PRICING + " INT," +
                 KEY_TYPES + " TEXT," +
-                KEY_LONGITUDE + " TEXT" +
+                KEY_LONGITUDE + " TEXT, " +
                 KEY_LATITUDE + " TEXT" +
                 ")";
         db.execSQL(CREATE_NOTES_TABLE);
@@ -91,10 +92,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
     // dodanie miejsca
     // przekazujemy klase z polami statycznymi, bo tak jest najłatwiej
-    public void addPlace(PlaceData place) {
+    public void addPlace() {
 
         ContentValues values = new ContentValues();
-
+        values.put(KEY_G_ID, PlaceData.ID);
         values.put(KEY_NAME, PlaceData.NAME); // nazwa miejsca
         values.put(KEY_ADDRESS, PlaceData.ADDRESS);  // treść notatki
         values.put(KEY_DATE, getDateTime());  // ustawiamy date dodania
@@ -112,48 +113,63 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-    // pobranie pojedynczej notatki
-    public PlaceData getPlace(int id) {
-
-        // zamiast new String[] { KEY_ID, KEY_TITLE, KEY_BODY }
-        // możemy użyć null (wszystkie kolumny)
+    // pobranie pojedynczej notatki po id z googla
+    public boolean getPlace(String id) {
         Cursor cursor = db.query(TABLE_PLACES, null,
-                KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
+                KEY_G_ID + "=?", new String[] { id }, null, null, null, null);
+
+
+        if(cursor.getCount() <= 0)
+            return false;
 
         if (cursor != null)
             cursor.moveToFirst();
-        /*
-        KEY_ID
-        KEY_NAME +  " TEXT," +
-        KEY_ADDRESS + " TEXT," +
-        KEY_DATE + " DATETIME," +
-        KEY_RATING + " REAL," +
-        KEY_PHONE_NUMBER + " TEXT," +
-        KEY_URI + " TEXT," +
-        KEY_PRICING + " INT," +
-        KEY_TYPES + " TEXT," +
-        KEY_LONGITUDE + " TEXT" +
-        KEY_LATITUDE + " TEXT" +*/
+
         List<Integer> typy = new ArrayList<Integer>();
         typy.add(1);
-        PlaceData place = new PlaceData(
-                Integer.parseInt(cursor.getString(0)), // ID
-                cursor.getString(1),
-                cursor.getString(2), // Nazwa
-                cursor.getString(3), //Adres
-                cursor.getString(4), //data
-                Float.parseFloat(cursor.getString(5)), // rating
-                cursor.getString(6), // numer telefonu
-                cursor.getString(7), // uri
-                Integer.parseInt(cursor.getString(8)), // pricing
-                typy, // types
-                new LatLng(Double.parseDouble(cursor.getString(10)), // dlugosc
-                           Double.parseDouble(cursor.getString(11))) // szerokosc
-        );
-        // zwracamy miejsce
-        return place;
-    }
 
+        PlaceData.ID = cursor.getString(1); // G_ID
+        PlaceData.ADDRESS = cursor.getString(3);
+        PlaceData.NAME = cursor.getString(2);
+        PlaceData.PHONE_NUMBER = cursor.getString(6);
+        PlaceData.URI = cursor.getString(7);
+        PlaceData.RATING = Float.parseFloat(cursor.getString(5));
+        PlaceData.PRICING = Integer.parseInt(cursor.getString(8));
+        PlaceData.TYPES = typy;
+        //PlaceData.LOCALE;
+        PlaceData.LATLNG = new LatLng(Double.parseDouble(cursor.getString(10)), // dlugosc
+                Double.parseDouble(cursor.getString(11)));
+
+        return true;
+    }
+    public boolean getPlace(long id) {
+        Cursor cursor = db.query(TABLE_PLACES, null,
+                KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
+
+
+        if(cursor.getCount() <= 0)
+            return false;
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        List<Integer> typy = new ArrayList<Integer>();
+        typy.add(1);
+        //Log.i("aaaXX", cursor.getString(3));
+        PlaceData.ID = cursor.getString(1); // G_ID
+        PlaceData.ADDRESS = cursor.getString(3);
+        PlaceData.NAME = cursor.getString(2);
+        PlaceData.PHONE_NUMBER = cursor.getString(6);
+        PlaceData.URI = cursor.getString(7);
+        PlaceData.RATING = Float.parseFloat(cursor.getString(5));
+        PlaceData.PRICING = Integer.parseInt(cursor.getString(8));
+        PlaceData.TYPES = typy;
+        //PlaceData.LOCALE;
+        PlaceData.LATLNG = new LatLng(Double.parseDouble(cursor.getString(10)), // dlugosc
+                Double.parseDouble(cursor.getString(11)));
+
+        return true;
+    }
     // pobranie wszystkich notatek
     public List<PlaceData> getAllNotes() {
 
@@ -232,11 +248,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // usunięcie pojedynczego miejsca po ID
+    public void deletePlace(String id) {
+
+        db.delete(TABLE_PLACES, KEY_G_ID + " = ?",
+                new String[] { id });
+
+    }
+    //usuwanie po zwyklym id
     public void deletePlace(long id) {
 
         db.delete(TABLE_PLACES, KEY_ID + " = ?",
                 new String[] { String.valueOf(id) });
 
     }
-
 }

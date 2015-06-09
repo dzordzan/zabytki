@@ -2,19 +2,25 @@ package com.example.andrzej.zabytki;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -22,7 +28,7 @@ import android.widget.Toast;
 public class FavouritePlacesActivity extends ListActivity {
 
     private DatabaseHandler db;
-    private SimpleCursorAdapter places;
+    private PlaceCursorAdapter places;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -48,10 +54,10 @@ public class FavouritePlacesActivity extends ListActivity {
         //Log.i("BAZA", "Pozycja: " + position + " ID: " + id);
         // informacja o danych związanych z kliknięciem (id jest związane z naszą bazą)
         Log.i("BAZA", "Pozycja: " + position + " ID: " + id);
+        db.getPlace(id);
 
-        //Intent cel = new Intent(this, NoteSettingsActivity.class);
-        //cel.putExtra("id", (int) id);
-        //startActivity(cel);
+        Intent cel = new Intent(this, PlaceActivity.class);
+        startActivity(cel);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -79,16 +85,20 @@ public class FavouritePlacesActivity extends ListActivity {
     private void fillData() {
 
         Cursor c = db.fetchAllNotes();
-        startManagingCursor(c);
+        /*startManagingCursor(c);
 
         String[] from = new String[] { DatabaseHandler.KEY_NAME,
                                        DatabaseHandler.KEY_ADDRESS,
-                                    //DatabaseHandler.KEY_RATING,
+                                    DatabaseHandler.KEY_RATING,
                                     DatabaseHandler.KEY_DATE};
-        int[] to = new int[] { R.id.placeName, R.id.placeAddress, R.id.placeDate };
+        int[] to = new int[] { R.id.placeName, R.id.placeAddress, R.id.ratingBar2, R.id.placeDate };
 
         // Uzupełniamy listę wartościami
         this.places = new SimpleCursorAdapter(this, R.layout.list_item, c, from, to);
+        */
+        ListView lvItems = (ListView) findViewById(R.id.list_item);
+        this.places = new PlaceCursorAdapter(this, c);
+
         setListAdapter(places);
 
     }
@@ -157,5 +167,43 @@ public class FavouritePlacesActivity extends ListActivity {
         }
         fillData();
 
+    }
+}
+
+class PlaceCursorAdapter extends CursorAdapter {
+    public PlaceCursorAdapter(Context context, Cursor cursor) {
+        super(context, cursor, 0);
+    }
+
+    // The newView method is used to inflate a new view and return it,
+    // you don't bind any data to the view at this point.
+    @Override
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        return LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
+    }
+
+    // The bindView method is used to bind all data to a given view
+    // such as setting the text on a TextView.
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+        // Find fields to populate in inflated template
+        TextView name = (TextView) view.findViewById(R.id.placeName);
+        TextView address = (TextView) view.findViewById(R.id.placeAddress);
+        TextView date = (TextView) view.findViewById(R.id.placeDate);
+        RatingBar rating = (RatingBar) view.findViewById(R.id.ratingBar2);
+       /* ,
+        DatabaseHandler.KEY_ADDRESS,
+        DatabaseHandler.KEY_RATING,
+        DatabaseHandler.KEY_DATE}; DatabaseHandler.KEY_NAME,
+        DatabaseHandler.KEY_ADDRESS,
+        DatabaseHandler.KEY_RATING,
+        DatabaseHandler.KEY_DATE};*/
+
+        // Populate fields with extracted properties
+        name.setText(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHandler.KEY_NAME)));
+        address.setText(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHandler.KEY_ADDRESS)));
+        date.setText(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHandler.KEY_DATE)));
+        rating.setRating(cursor.getFloat(cursor.getColumnIndexOrThrow(DatabaseHandler.KEY_RATING)));
+        Log.i("tag", cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHandler.KEY_PRICING)));
     }
 }

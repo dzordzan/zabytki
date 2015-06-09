@@ -44,20 +44,17 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void Map(View view) {
-
-        Intent mapa = new Intent(this, MapsActivity.class);
-
-
-        startActivity(mapa);
-    }
-
-    public void Help(View view) throws UserRecoverableException, GooglePlayServicesNotAvailableException {
+    public void Map(View view) throws UserRecoverableException, GooglePlayServicesNotAvailableException {
         int PLACE_PICKER_REQUEST = 1;
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
 
         Context context = getApplicationContext();
         startActivityForResult(builder.build(context), PLACE_PICKER_REQUEST);
+
+    }
+
+    public void Help(View view) throws UserRecoverableException, GooglePlayServicesNotAvailableException {
+
 
 
     }
@@ -73,10 +70,10 @@ public class MainActivity extends Activity {
                 PlaceData.LATLNG = place.getLatLng();
                 PlaceData.LOCALE = place.getLocale();
                 PlaceData.NAME = place.getName().toString();
-                PlaceData.PHONE_NUMBER = place.getPhoneNumber().toString();
+                PlaceData.PHONE_NUMBER = (place.getPhoneNumber()!=null)?place.getPhoneNumber().toString():null;
                 PlaceData.PRICING = place.getPriceLevel();
                 PlaceData.TYPES = place.getPlaceTypes();
-                PlaceData.URI = place.getWebsiteUri().toString();
+                PlaceData.URI = (place.getWebsiteUri()!=null)?place.getWebsiteUri().toString():null;
                 PlaceData.RATING = place.getRating();
 
                 Intent placeActivity = new Intent(this, PlaceActivity.class);
