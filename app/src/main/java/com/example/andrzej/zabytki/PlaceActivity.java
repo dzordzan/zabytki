@@ -54,12 +54,14 @@ public class PlaceActivity extends Activity implements onResponse {
     private TextView url;
     private RatingBar rating;
     private Button addOrDel;
-
+    private DatabaseHandler db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place);
-
+        db =  new DatabaseHandler(this);
+        //przypisywanie akcji do przycisku
+        addListenerOnRatingBar();
 
         name = (TextView) findViewById(R.id.textView);
         addres = (TextView) findViewById(R.id.textView2);
@@ -68,7 +70,6 @@ public class PlaceActivity extends Activity implements onResponse {
         addOrDel = (Button) findViewById(R.id.button2);
         rating = (RatingBar) findViewById(R.id.ratingBar);
 
-        DatabaseHandler db = new DatabaseHandler(this);
 
         if (db.getPlace(PlaceData.ID)) {
             addOrDel.setText("Usuń z ulubionych");
@@ -197,6 +198,22 @@ public class PlaceActivity extends Activity implements onResponse {
         startActivity(i);
     }
 
+    public void addListenerOnRatingBar() {
+        rating = (RatingBar) findViewById(R.id.ratingBar);
+        rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+
+            public void onRatingChanged(RatingBar ratingBar, float rating,  boolean fromUser) {
+                PlaceData.RATING = rating;
+                db.updateRating();
+                //Log.d("A", String.valueOf(rating));
+            }
+
+        });
+
+    }
+
+
+
     public void map(View view) throws UserRecoverableException, GooglePlayServicesNotAvailableException {
         int PLACE_PICKER_REQUEST = 1;
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
@@ -205,6 +222,8 @@ public class PlaceActivity extends Activity implements onResponse {
         startActivityForResult(builder.build(context), PLACE_PICKER_REQUEST);
 
     }
+
+
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {

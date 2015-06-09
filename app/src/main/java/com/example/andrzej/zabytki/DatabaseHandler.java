@@ -227,17 +227,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // aktualizacja notatki
-    /*public int updateNote(Notatka notatka) {
+    public int updateRating() {
 
         ContentValues values = new ContentValues();
-        values.put(KEY_TITLE, notatka.getTytul());
-        values.put(KEY_BODY, notatka.getTresc());
-        values.put(KEY_PRIORITY, notatka.getPriority());
+        values.put(KEY_RATING, PlaceData.RATING);
 
         // aktualizacja wiersza
-        return db.update(TABLE_PLACES, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(notatka.getId()) });
-    }*/
+        return db.update(TABLE_PLACES, values, KEY_G_ID + " = ?",
+                new String[] { String.valueOf(PlaceData.ID) });
+    }
 
     // usunięcie pojedynczego miejsca
     public void deletePlace(PlaceData place) {
