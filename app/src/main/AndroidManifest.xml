@@ -44,11 +44,15 @@
         </activity>
         <activity
             android:name=".FavouritePlacesActivity"
-            android:label="Ulubione miejsca">
+            android:label="Ulubione miejsca" >
         </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name=".HelpActivity"
+            android:label="@string/title_activity_help" >
         </activity>
     </application>
 
