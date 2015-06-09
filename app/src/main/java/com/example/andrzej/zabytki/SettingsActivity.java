@@ -43,9 +43,6 @@ public class SettingsActivity extends Activity {
             rbtn.setChecked(true);
         }
 
-        String value = Integer.toString(getSelectedValue());
-        TextView test = (TextView)findViewById(R.id.testText);
-        test.setText(value);
     }
 
     private int getSelectedValue(){
@@ -91,7 +88,6 @@ public class SettingsActivity extends Activity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-//        Intent menu = new Integer(this, MainActivity.class);
-//        startActivity(menu);
+        finish();
     }
 }
