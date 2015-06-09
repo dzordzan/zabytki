@@ -14,7 +14,6 @@ import com.google.android.gms.common.UserRecoverableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
-
 public class MainActivity extends Activity {
 
     @Override
