@@ -44,30 +44,39 @@
         android:layout_height="wrap_content"
         android:id="@+id/ratingBar" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nawiguj"
-        android:id="@+id/button3"
-        android:onClick="navigation" />
-
-    <LinearLayout
-        android:orientation="horizontal"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <Button
-            android:layout_width="163dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Powrót do mapy"
-            android:id="@+id/button" />
+            android:text="Nawiguj"
+            android:id="@+id/button3"
+            android:onClick="navigation"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Mapa"
+            android:id="@+id/button"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="5dp"
+            android:layout_above="@+id/button3"
+            android:layout_alignParentStart="true"
+            android:onClick="map" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Dodaj obiekt"
             android:id="@+id/button2"
-            android:onClick="addToFavourite" />
-    </LinearLayout>
+            android:onClick="addToFavourite"
+            android:layout_gravity="bottom"
+            android:layout_alignTop="@+id/button"
+            android:layout_toEndOf="@+id/button" />
+    </RelativeLayout>
 
 </LinearLayout>
