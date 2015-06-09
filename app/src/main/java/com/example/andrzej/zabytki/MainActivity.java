@@ -68,6 +68,7 @@ public class MainActivity extends Activity {
                 Place place = PlacePicker.getPlace(data, this);
                 /*String toastMsg = String.format("Place: %s", place.getName());
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();*/
+                PlaceData.ID = place.getId();
                 PlaceData.ADDRESS = String.valueOf(place.getAddress());
                 PlaceData.LATLNG = place.getLatLng();
                 PlaceData.LOCALE = place.getLocale();

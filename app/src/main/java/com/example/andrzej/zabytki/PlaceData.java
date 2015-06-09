@@ -8,6 +8,7 @@ import java.util.Locale;
 public class PlaceData {
 
     /* Pola statyczne, przekazywane tylko nowej aktywnosc/dodwania notatek */
+    public static String ID;
     public static String ADDRESS;
     public static String NAME;
     public static String PHONE_NUMBER;
@@ -20,6 +21,7 @@ public class PlaceData {
 
     /* Pola prywatne obiektu */
     private int id;
+    private String g_id;
     private String address;
     private String date;
     private String name;
@@ -32,6 +34,7 @@ public class PlaceData {
     private LatLng latLng;
 
     public PlaceData(int id,
+                     String g_id,
                      String name,
                      String address,
                      String date,
@@ -43,6 +46,7 @@ public class PlaceData {
                      List<Integer> types,
                      //Locale locale,
                      LatLng latLng) {
+        this.g_id = g_id;
         this.id = id;
         this.address = address;
         this.date = date;

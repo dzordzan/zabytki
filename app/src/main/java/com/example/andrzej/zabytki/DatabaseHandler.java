@@ -28,6 +28,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // nazwy kolumn naszej tabeli
     public static final String KEY_ID = "_id";
+    public static final String KEY_G_ID = "g_id"; //id obiektu z google
     public static final String KEY_NAME = "nazwa";
     public static final String KEY_ADDRESS = "adres";
     public static final String KEY_DATE = "data";
@@ -58,6 +59,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         String CREATE_NOTES_TABLE = "CREATE TABLE " + TABLE_PLACES + "(" + KEY_ID +
                 " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                KEY_G_ID +  " TEXT," +
                 KEY_NAME +  " TEXT," +
                 KEY_ADDRESS + " TEXT," +
                 KEY_DATE + " DATETIME," +
@@ -136,16 +138,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         typy.add(1);
         PlaceData place = new PlaceData(
                 Integer.parseInt(cursor.getString(0)), // ID
-                cursor.getString(1), // Nazwa
-                cursor.getString(2), //Adres
-                cursor.getString(3), //data
-                Float.parseFloat(cursor.getString(4)), // rating
-                cursor.getString(5), // numer telefonu
-                cursor.getString(6), // uri
-                Integer.parseInt(cursor.getString(7)), // pricing
+                cursor.getString(1),
+                cursor.getString(2), // Nazwa
+                cursor.getString(3), //Adres
+                cursor.getString(4), //data
+                Float.parseFloat(cursor.getString(5)), // rating
+                cursor.getString(6), // numer telefonu
+                cursor.getString(7), // uri
+                Integer.parseInt(cursor.getString(8)), // pricing
                 typy, // types
-                new LatLng(Double.parseDouble(cursor.getString(9)), // dlugosc
-                           Double.parseDouble(cursor.getString(10))) // szerokosc
+                new LatLng(Double.parseDouble(cursor.getString(10)), // dlugosc
+                           Double.parseDouble(cursor.getString(11))) // szerokosc
         );
         // zwracamy miejsce
         return place;
@@ -167,19 +170,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             do {
                 List<Integer> typy = new ArrayList<Integer>();
                 typy.add(1);
+
                 PlaceData place = new PlaceData(
                         Integer.parseInt(cursor.getString(0)), // ID
-                        cursor.getString(1), // Nazwa
-                        cursor.getString(2), //Adres
-                        cursor.getString(3), //data
-                        Float.parseFloat(cursor.getString(4)), // rating
-                        cursor.getString(5), // numer telefonu
-                        cursor.getString(6), // uri
-                        Integer.parseInt(cursor.getString(7)), // pricing
+                        cursor.getString(1),
+                        cursor.getString(2), // Nazwa
+                        cursor.getString(3), //Adres
+                        cursor.getString(4), //data
+                        Float.parseFloat(cursor.getString(5)), // rating
+                        cursor.getString(6), // numer telefonu
+                        cursor.getString(7), // uri
+                        Integer.parseInt(cursor.getString(8)), // pricing
                         typy, // types
-                        new LatLng(Double.parseDouble(cursor.getString(9)), // dlugosc
-                                Double.parseDouble(cursor.getString(10))) // szerokosc
+                        new LatLng(Double.parseDouble(cursor.getString(10)), // dlugosc
+                                Double.parseDouble(cursor.getString(11))) // szerokosc
                 );
+
                 placeList.add(place);
 
             } while (cursor.moveToNext());
