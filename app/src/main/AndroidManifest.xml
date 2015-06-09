@@ -46,6 +46,10 @@
             android:name=".PlaceActivity"
             android:label="@string/title_activity_zabytek" >
         </activity>
+        <activity
+            android:name=".FavouritePlacesActivity"
+            android:label="Ulubione" >
+        </activity>
     </application>
 
 </manifest>
