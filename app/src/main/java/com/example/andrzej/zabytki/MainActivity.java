@@ -68,15 +68,15 @@ public class MainActivity extends Activity {
                 Place place = PlacePicker.getPlace(data, this);
                 /*String toastMsg = String.format("Place: %s", place.getName());
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();*/
-                PlaceData.address = String.valueOf(place.getAddress());
-                PlaceData.latlng = place.getLatLng();
-                PlaceData.locale = place.getLocale();
-                PlaceData.name = place.getName().toString();
-                PlaceData.phoneNumber = place.getPhoneNumber().toString();
-                PlaceData.pricing = place.getPriceLevel();
-                PlaceData.types = place.getPlaceTypes();
-                PlaceData.uri = place.getWebsiteUri().toString();
-                PlaceData.rating = place.getPriceLevel();
+                PlaceData.ADDRESS = String.valueOf(place.getAddress());
+                PlaceData.LATLNG = place.getLatLng();
+                PlaceData.LOCALE = place.getLocale();
+                PlaceData.NAME = place.getName().toString();
+                PlaceData.PHONE_NUMBER = place.getPhoneNumber().toString();
+                PlaceData.PRICING = place.getPriceLevel();
+                PlaceData.TYPES = place.getPlaceTypes();
+                PlaceData.URI = place.getWebsiteUri().toString();
+                PlaceData.RATING = place.getRating();
 
                 Intent placeActivity = new Intent(this, PlaceActivity.class);
 
