@@ -53,11 +53,8 @@ public class MainActivity extends Activity {
     }
 
     public void Help(View view) throws UserRecoverableException, GooglePlayServicesNotAvailableException {
-        int PLACE_PICKER_REQUEST = 1;
-        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-
-        Context context = getApplicationContext();
-        startActivityForResult(builder.build(context), PLACE_PICKER_REQUEST);
+          Intent help = new Intent(this, HelpActivity.class);
+          startActivity(help);
 
 
     }
