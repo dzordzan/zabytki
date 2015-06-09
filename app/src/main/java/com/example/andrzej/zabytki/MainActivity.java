@@ -70,10 +70,10 @@ public class MainActivity extends Activity {
                 PlaceData.LATLNG = place.getLatLng();
                 PlaceData.LOCALE = place.getLocale();
                 PlaceData.NAME = place.getName().toString();
-                PlaceData.PHONE_NUMBER = place.getPhoneNumber().toString();
+                PlaceData.PHONE_NUMBER = (place.getPhoneNumber()!=null)?place.getPhoneNumber().toString():null;
                 PlaceData.PRICING = place.getPriceLevel();
                 PlaceData.TYPES = place.getPlaceTypes();
-                PlaceData.URI = place.getWebsiteUri().toString();
+                PlaceData.URI = (place.getWebsiteUri()!=null)?place.getWebsiteUri().toString():null;
                 PlaceData.RATING = place.getRating();
 
                 Intent placeActivity = new Intent(this, PlaceActivity.class);
