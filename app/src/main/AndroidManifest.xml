@@ -37,9 +37,14 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" >
+        </activity>
+        <activity
+            android:name=".PlaceActivity"
+            android:label="@string/title_activity_zabytek" >
         </activity>
     </application>
 
