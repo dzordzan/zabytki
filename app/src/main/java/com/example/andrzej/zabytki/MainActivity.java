@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.UserRecoverableException;
@@ -59,14 +58,29 @@ public class MainActivity extends Activity {
 
         Context context = getApplicationContext();
         startActivityForResult(builder.build(context), PLACE_PICKER_REQUEST);
+
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-                String toastMsg = String.format("Place: %s", place.getName());
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+                /*String toastMsg = String.format("Place: %s", place.getName());
+                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();*/
+                PlaceData.address = String.valueOf(place.getAddress());
+                PlaceData.latlng = place.getLatLng();
+                PlaceData.locale = place.getLocale();
+                PlaceData.name = place.getName().toString();
+                PlaceData.phoneNumber = place.getPhoneNumber().toString();
+                PlaceData.pricing = place.getPriceLevel();
+                PlaceData.types = place.getPlaceTypes();
+                PlaceData.uri = place.getWebsiteUri().toString();
+                PlaceData.rating = place.getPriceLevel();
+
+                Intent placeActivity = new Intent(this, PlaceActivity.class);
+
+                startActivity(placeActivity);
             }
         }
     }
